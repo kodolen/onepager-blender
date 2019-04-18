@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Maps API</title>
+
+    <link href="css-compiled/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/swiper/dist/css/swiper.min.css">
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="js/app.js"></script>
+<script src="node_modules/swiper/dist/js/swiper.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB81QY8tL-9G8MdXKJUCx9YTRjQJYEXiv8&callback=initMap" async
+        defer></script>
+
+
+<div class="interface">
+
+    <div id="map"></div>
+
+    <div class="sync">
+        <img src="images/no%20wifi.png" alt="">
+        <span>Geen verbinding, alles wordt opgeslagen.</span>
+    </div>
+
+    <div class="avatar">
+        <img src="images/avatar1.png" alt="">
+    </div>
+
+    <div id="buttons">
+        <div class="button">
+            <div class="icon">
+                <img src="images/notification.png" onclick="dropDownNote()" alt="">
+            </div>
+        </div>
+        <div class="button" onclick="dropDown()">
+            <div class="icon">
+                <img src="images/stack.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div id="add-issue">
+        <img src="images/union.png" alt="">
+        <div class="add">
+            Nieuw issue
+        </div>
+    </div>
+
+    <div id="issues">
+        <div class="close" onclick="closeIssues()">
+            <img src="images/Close.png" alt="">
+        </div>
+
+        <div class="title-wrapper">
+            <h2>Bijna omvallende essen</h2>
+            <p>Veel van de bomen in dit gebied zijn geïnfecteerd. Er staat een groepje bomen langs het kleine paadje dat
+                gevaarlijk krom begint te staan.
+                Er is groot omvalgevaar waardoor het pad besperd wordt. In de gaten houden!</p>
+        </div>
+
+        <div class="issue">
+            <div class="profile">
+                <div class="pic"><img src="images/piet.png" alt=""></div>
+                <div class="title">
+                    <h2>Urgent!</h2>
+                    <span class="name">Piet van Loon</span>
+                </div>
+                <span class="date">02-04-2019</span>
+            </div>
+            <p>Een van de bomen is afgelopen week omgevallen en de anderen gaan binnenkort ook plat ben ik bang. Ik
+                bespreek graag zo spoedig mogelijk welke maatregelen we treffen.</p>
+
+            <div class="trees">
+                <img src="images/tree1.png" alt="">
+                <img src="images/01.2.jpg" alt="">
+                <img src="images/01.3.jpg" alt="">
+                <img src="images/01.4.jpg" alt="">
+            </div>
+
+            <div class="ndvi-toggle">
+                <span>Bekijk NDVI overlay van dit moment</span>
+                <input class="apple-switch" id="toggle" type="checkbox">
+            </div>
+
+        </div>
+
+        <div class="issue">
+            <div class="profile">
+                <div class="pic"><img src="images/avatar1.png" alt=""></div>
+                <div class="title">
+                    <h2>Even aankijken</h2>
+                    <span class="name">Saskia Linssen</span>
+                </div>
+                <span class="date">02-04-2019</span>
+            </div>
+            <p>Ik houd de bomen de laatste twee weken erg close in de gaten. Laten we momenteel nog even wachten met
+                maatregelen. Ik ken deze bomen goed en ik denk dat het wel meevalt.</p>
+
+            <div class="trees">
+                <img src="images/02.1.jpg" alt="">
+                <img src="images/02.2.jpg" alt="">
+            </div>
+
+            <!--Sorry for this, but I had to :'(-->
+            <div class="dirty-trick"></div>
+
+        </div>
+
+        <div class="input">
+            <img src="images/camera.png" alt="">
+            <form action="javascript:getValue()">
+                <input type="text" id="note-issue" placeholder="Schrijf nieuwe notitie">
+            </form>
+        </div>
+
+    </div>
+
+    <div class="drop-down">
+        <h2>Map type</h2>
+        <div class="map-id" id="terrain"><img src="images/kaart.png"><span>Standaard kaart</span></div>
+        <div class="map-id" id="satellite"><img src="images/NDVI-view-icon.png"><span>Boomveiligheid</span></div>
+        <div class="map-id"><img src="images/waterstand.png"><span>Waterstand en irrigatie</span></div>
+        <div class="map-id"><img src="images/exoten.png"><span>Exoten</span></div>
+        <div class="map-id"><img src="images/zandverstuiving.png"><span>Zandverstuiving</span></div>
+    </div>
+
+    <div class="drop-down-notificiation">
+        <h2>Meldingen</h2>
+
+        <div class="note-id">
+            <div class="image-wrapper">
+                <img src="images/iets.png">
+            </div>
+            <div class="note">
+                <h3>Nieuwe reactie</h3>
+                <p>Boswachter Piet heeft een reactie met afbeeldingen geplaatst bij uw melding.</p>
+            </div>
+            <div class="date">
+                <span>12/03/2019</span>
+            </div>
+        </div>
+
+        <div class="note-id">
+            <div class="image-wrapper">
+                <img src="images/NDVI-view.png" id="satellite">
+            </div>
+            <div class="note">
+                <h3>Nieuw NDVI beeld</h3>
+                <p>Er zijn een set nieuwe NDVI afbeeldingen beschikbaar. Bekijk nu de beelden voor Drenthe Zuid.</p>
+            </div>
+            <div class="date">
+                <span>12/03/2019</span>
+            </div>
+        </div>
+
+        <div class="note-id">
+            <div class="image-wrapper">
+                <img src="images/iets2.png">
+            </div>
+            <div class="note">
+                <h3>Nieuwe melding</h3>
+                <p>Boswachter Piet heeft een nieuwe melding over exoten gemaakt in uw gebied.</p>
+            </div>
+            <div class="date">
+                <span>12/03/2019</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
